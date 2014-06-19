@@ -21,9 +21,8 @@ public class CustomerEntity implements Cloneable {
 	}
 	
 	@Id
-	@GeneratedValue(generator = "CustomerSeq")
-	@SequenceGenerator(name = "CustomerSeq", sequenceName = "CUSTOMER_SEQ", allocationSize = 1, initialValue = 1)
 	@Column(name = "customer_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
@@ -31,7 +30,7 @@ public class CustomerEntity implements Cloneable {
 		this.id = id;
 	}
 	
-	@Column(name = "first_name")
+	@Column(name = "first_name", nullable = false)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -39,7 +38,7 @@ public class CustomerEntity implements Cloneable {
 		this.firstName = firstName;
 	}
 	
-	@Column(name = "last_name")
+	@Column(name = "last_name", nullable = false)
     public String getLastName() {
         return lastName;
     }

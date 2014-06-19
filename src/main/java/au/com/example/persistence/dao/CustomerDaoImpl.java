@@ -59,7 +59,7 @@ public class CustomerDaoImpl extends BaseDao implements CustomerDao {
         boolean success = false;
 
         try {
-            success = customer.getId() == null ? persistSingleData(toCustomerEntity(customer)) : updateSingleData(toCustomerEntity(customer));
+            success = updateSingleData(toCustomerEntity(customer));
         }
         catch(UpdateDeleteException e) {
             log.error("Error saving customer with id: " + customer.getId());
