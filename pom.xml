@@ -321,7 +321,7 @@
                         <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/custom/service.js</source>
                     </preloadSources>
                     <jsSrcDir>${project.basedir}/src/main/webapp/WEB-INF/resources/js</jsSrcDir>
-                    <jsTestSrcDir>${project.basedir}/src/test/webapp/js</jsTestSrcDir>
+                    <jsTestSrcDir>${project.basedir}/src/test/webapp/WEB-INF/resources/js</jsTestSrcDir>
                     <specIncludes>
                         <include>**/*.spec.js</include>
                     </specIncludes>
