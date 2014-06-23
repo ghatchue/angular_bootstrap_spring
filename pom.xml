@@ -35,6 +35,8 @@
 
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.12.4</maven.surefire.plugin.version>
+        <phantomjs.maven.plugin.version>0.4</phantomjs.maven.plugin.version>
+        <jasmine.maven.plugin.version>2.0-alpha-01</jasmine.maven.plugin.version>
     </properties>
 
     <dependencies>
@@ -251,6 +253,16 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire.plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>com.github.klieber</groupId>
+                    <artifactId>phantomjs-maven-plugin</artifactId>
+                    <version>${phantomjs.maven.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.searls</groupId>
+                    <artifactId>jasmine-maven-plugin</artifactId>
+                    <version>${jasmine.maven.plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -259,6 +271,60 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.klieber</groupId>
+                <artifactId>phantomjs-maven-plugin</artifactId>
+                <version>${phantomjs.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <version>1.9.2</version>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.searls</groupId>
+                <artifactId>jasmine-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+                    <webDriverCapabilities>
+                        <capability>
+                            <name>phantomjs.binary.path</name>
+                            <value>${phantomjs.binary}</value>
+                        </capability>
+                    </webDriverCapabilities>
+                    <preloadSources>
+                        <!-- third-party -->
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/jquery/jquery.js</source>
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/angular/angular.js</source>
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/angular/angular-route.js</source>
+                        <!-- required -->
+                        <source>${project.basedir}/src/test/resources/WEB-INF/resources/js/angular/angular-mocks.js</source>
+                        <!-- custom -->
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/custom/app.js</source>
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/custom/config.js</source>
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/custom/listener.js</source>
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/custom/controller.js</source>
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/resources/js/custom/service.js</source>
+                    </preloadSources>
+                    <jsSrcDir>${project.basedir}/src/main/webapp/WEB-INF/resources/js</jsSrcDir>
+                    <jsTestSrcDir>${project.basedir}/src/test/webapp/js</jsTestSrcDir>
+                    <specIncludes>
+                        <include>**/*.spec.js</include>
+                    </specIncludes>
                 </configuration>
             </plugin>
         </plugins>
