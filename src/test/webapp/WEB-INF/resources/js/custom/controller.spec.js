@@ -1,45 +1,77 @@
 describe('CustomerController Tests', function() {
-    var $rootScope, createController;
+    var $rootScope, $controller, mockCustomerService, deferred, spyPromise;
 
-    beforeEach(function() {
+    beforeEach(function() { module('app'); });
 
-        // load the module.
-        module('app');
+    beforeEach(
+        inject(function(_$rootScope_, _$controller_, _$q_) {
 
-        inject(function(_$rootScope_, _$controller_) {
+            $rootScope = _$rootScope_.$new();
 
-            $rootScope = _$rootScope_;
+            //create a promise for the spy to return to mock the async calls to the service
+            deferred = _$q_.defer();
+            spyPromise = deferred.promise;
 
-            createController = function () {
-                return _$controller_('CustomerController', {'$scope': $rootScope });
-            };
+            //create spy for the service being called so it is mocked out
+            mockCustomerService = jasmine.createSpyObj('CustomerService',['getCustomers', 'deleteCustomer', 'saveCustomer']);
+
+            // initialize controller
+            $controller = _$controller_('CustomerController', {'$scope': $rootScope, CustomerService : mockCustomerService });
+        })
+    );
+
+    describe('CustomerController Structural Tests', function() {
+
+        // check to see if it has the expected function
+        it('should have an init function in scope', function () {
+           expect(angular.isFunction($rootScope.init)).toBe(true);
+        });
+
+        // check to see if it has the expected function
+        it('should have an save function in scope', function () {
+            expect(angular.isFunction($rootScope.save)).toBe(true);
+        });
+
+        // check to see if it has the expected function
+        it('should have an delete function in scope', function () {
+            expect(angular.isFunction($rootScope.delete)).toBe(true);
         });
     });
 
-    // check to see if it has the expected function
-    it('should have an init function in scope', function () {
-        createController();
+    describe('CustomerController Customers Tests', function() {
 
-        expect(angular.isFunction($rootScope.init)).toBe(true);
-    });
+        beforeEach(function() {
+            //setup the spy to always return the spyPromise for the entire test spec
+            mockCustomerService.getCustomers.and.returnValue(spyPromise);
+        });
 
-    // check to see if it has the expected function
-    it('should have an save function in scope', function () {
-        createController();
+        // check that the customers starts undefined
+        it('should initially has customers undefined before any calls are made', function(){
+            expect($rootScope.customers).toEqual(undefined);
+        });
 
-        expect(angular.isFunction($rootScope.save)).toBe(true);
-    });
+        // check that scope variable is populated
+        it('should have scope variable customers populated', function () {
+            $rootScope.init();
 
-    // check to see if it has the expected function
-    it('should have an delete function in scope', function () {
-        createController();
+            deferred.resolve([
+                {"id": 1, "firstName": "Foo", "lastName": "Bar"},
+                {"id": 2, "firstName": "Jim", "lastName": "Sunny"},
+                {"id": 3, "firstName": "Peter", "lastName": "Prone"},
+                {"id": 4, "firstName": "Sam", "lastName": "Sully"}
+            ]);
 
-        expect(angular.isFunction($rootScope.delete)).toBe(true);
+            $rootScope.$apply();
+
+            expect($rootScope.customers).toEqual([ { id : 1, firstName : 'Foo', lastName : 'Bar' }, { id : 2, firstName : 'Jim', lastName : 'Sunny' }, { id : 3, firstName : 'Peter', lastName : 'Prone' }, { id : 4, firstName : 'Sam', lastName : 'Sully' } ]);
+            expect(mockCustomerService.getCustomers).toHaveBeenCalled();
+        });
     });
 });
 
 describe('MainController Tests', function() {
-    var $rootScope, createController;
+
+    var $rootScope, $controller;
 
     beforeEach(function() {
 
@@ -50,22 +82,19 @@ describe('MainController Tests', function() {
 
             $rootScope = _$rootScope_;
 
-            createController = function () {
-                return _$controller_('MainController', {'$scope': $rootScope });
-            };
+            $controller = _$controller_('MainController', {'$scope': $rootScope });
         });
     });
 
     // check to see if it has the expected function
     it('should have an logout function in scope', function () {
-        createController();
-
         expect(angular.isFunction($rootScope.logout)).toBe(true);
     });
 });
 
 describe('LoginController Tests', function() {
-    var $rootScope, createController;
+
+    var $rootScope, $controller;
 
     beforeEach(function() {
 
@@ -76,16 +105,12 @@ describe('LoginController Tests', function() {
 
             $rootScope = _$rootScope_;
 
-            createController = function () {
-                return _$controller_('LoginController', {'$scope': $rootScope });
-            };
+            $controller = _$controller_('LoginController', {'$scope': $rootScope });
         });
     });
 
     // check to see if it has the expected function
     it('should have an login function in scope', function () {
-        createController();
-
         expect(angular.isFunction($rootScope.login)).toBe(true);
     });
 });
