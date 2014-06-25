@@ -31,7 +31,7 @@ describe('CustomerController Tests', function() {
     describe('CustomerController Structural Tests', function() {
 
         it('should have an init function in scope', function () {
-           expect(angular.isFunction($rootScope.init)).toBe(true);
+            expect(angular.isFunction($rootScope.init)).toBe(true);
         });
 
         it('should have an save function in scope', function () {
@@ -172,49 +172,5 @@ describe('CustomerController Tests', function() {
             expect(mockCustomerService.deleteCustomer).toHaveBeenCalled();
             expect(console.error).toHaveBeenCalled();
         });
-    });
-});
-
-describe('MainController Tests', function() {
-
-    var $rootScope, $controller;
-
-    beforeEach(function() {
-
-        // load the module.
-        module('app');
-
-        inject(function(_$rootScope_, _$controller_) {
-
-            $rootScope = _$rootScope_;
-
-            $controller = _$controller_('MainController', {'$scope': $rootScope });
-        });
-    });
-
-    it('should have an logout function in scope', function () {
-        expect(angular.isFunction($rootScope.logout)).toBe(true);
-    });
-});
-
-describe('LoginController Tests', function() {
-
-    var $rootScope, $controller;
-
-    beforeEach(function() {
-
-        // load the module.
-        module('app');
-
-        inject(function(_$rootScope_, _$controller_) {
-
-            $rootScope = _$rootScope_;
-
-            $controller = _$controller_('LoginController', {'$scope': $rootScope });
-        });
-    });
-
-    it('should have an login function in scope', function () {
-        expect(angular.isFunction($rootScope.login)).toBe(true);
     });
 });
