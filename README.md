@@ -14,6 +14,13 @@ Spring Security 3:
 	A basic authentication will be triggered and the user credentials will be validated against the user service that
 	is specified in the spring security config. Spring Security session management is being used.
 
-Login Details as per spring security configuration:
-	Username = user
-	Password = password
+Login Details as per spring security configuration:    
+	Username = user    
+	Password = password    
+
+Testing
+====================
+Simply run on the parent pom     
+   mvn clean install    
+   
+This will execute Java and Jasmine tests that will test both java classes and angular js files.
