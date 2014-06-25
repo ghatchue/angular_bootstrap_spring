@@ -19,13 +19,18 @@ app.controller('CustomerController', function ($scope, CustomerService) {
 
     $scope.delete = function(id) {
         CustomerService.deleteCustomer(id).then(function(response) {
-            angular.forEach($scope.customers, function(customer, index) {
-                if(id == customer.id) {
-                    $scope.customers.splice(index, 1);
+            if(response) {
+                angular.forEach($scope.customers, function (customer, index) {
+                    if (id == customer.id) {
+                        $scope.customers.splice(index, 1);
 
-                    console.info("Customer " + id + " has been deleted.")
-                }
-            });
+                        console.info("Customer " + id + " has been deleted.")
+                    }
+                });
+            }
+            else {
+                console.error("Customer " + id + " was unable to be deleted.")
+            }
         });
     };
 
@@ -33,7 +38,12 @@ app.controller('CustomerController', function ($scope, CustomerService) {
         angular.forEach($scope.customers, function(customer, index) {
             if(id == customer.id) {
                 CustomerService.saveCustomer(customer).then(function(response) {
-                    console.info("Customer " + id + " has been saved.")
+                    if(response) {
+                        console.info("Customer " + id + " has been saved.")
+                    }
+                    else {
+                        console.error("Customer " + id + " was unable to be saved.")
+                    }
                 });
             }
         });
