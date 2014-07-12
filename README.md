@@ -18,14 +18,14 @@ Login Details as per spring security configuration:
 	Username = user    
 	Password = password    
 
-Testing
+Build
 ====================
-Simply run:
+To execute the build and run Java and Jasmine tests that will test both java classes and angular js files, run:
+```
 ./gradlew clean build
-   
-This will execute Java and Jasmine tests that will test both java classes and angular js files.
-
+```
 To run the example in an embedded Jetty web container, run:
+```
 ./gradlew jettyRunWar
-
+```
 The example will be available using a web browser at http://localhost:8080/abse/
