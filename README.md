@@ -22,10 +22,10 @@ Build
 ====================
 To execute the build and run Java and Jasmine tests that will test both java classes and angular js files, run:
 ```
-./gradlew clean build
+gradle clean build
 ```
 To run the example in an embedded Jetty web container, run:
 ```
-./gradlew jettyRunWar
+gradle jettyRunWar
 ```
 The example will be available using a web browser at http://localhost:8080/abse/
