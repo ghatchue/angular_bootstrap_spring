@@ -49,9 +49,13 @@ public class CustomerEntity implements Cloneable {
 	// ====== Cloneable Override =========
 
 	@Override
-	public CustomerEntity clone() {
-		return new CustomerEntity(id, firstName, lastName);
-	}
+	public CustomerEntity clone() throws CloneNotSupportedException {
+            CustomerEntity entity = (CustomerEntity)super.clone();
+            entity.setId(id);
+            entity.setFirstName(firstName);
+            entity.setLastName(lastName);
+            return entity;
+ 	}
 
 	// ====== Overrides ========
 

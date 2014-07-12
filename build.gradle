@@ -1,4 +1,6 @@
 apply plugin: 'war'
+apply plugin: 'jacoco'
+apply plugin: 'findbugs'
 apply plugin: 'jetty'
 
 defaultTasks 'build'
@@ -21,6 +23,24 @@ task grunt(type: Exec) {
         commandLine 'grunt', "--buildDir=$buildDir"
     }
 }
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+    effort = "max"
+    reportLevel = "low"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
+    }
+}
+check.dependsOn jacocoTestReport
 
 dependencies {
 

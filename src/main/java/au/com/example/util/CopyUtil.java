@@ -1,9 +1,9 @@
 package au.com.example.util;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
 
 public class CopyUtil
 {
@@ -42,7 +42,16 @@ public class CopyUtil
 					obj.add(clone(element));
 				}
 			}
-			catch (Exception e) {
+			catch (IllegalAccessException e) {
+				log.error("The cloneCollection failed: {}: {}", e.getClass().getName(), e.getMessage());
+			}
+			catch (InvocationTargetException e) {
+				log.error("The cloneCollection failed: {}: {}", e.getClass().getName(), e.getMessage());
+			}
+			catch (NoSuchMethodException e) {
+				log.error("The cloneCollection failed: {}: {}", e.getClass().getName(), e.getMessage());
+			}
+			catch (InstantiationException e) {
 				log.error("The cloneCollection failed: {}: {}", e.getClass().getName(), e.getMessage());
 			}
 		}

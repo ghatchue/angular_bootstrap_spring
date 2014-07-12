@@ -26,7 +26,7 @@ public class CustomerControllerEndpointTest extends SecurityEndpointTest {
 	@Autowired
 	private WebApplicationContext wac;
 
-	private MockMvc mockMvc;
+	private MockMvc mockMvc = null;
 
 	@Before
 	public void setup() {
