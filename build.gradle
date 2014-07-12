@@ -1,0 +1,90 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+defaultTasks 'build'
+group = 'au.com.example'
+
+repositories {
+    mavenCentral()
+}
+
+war {
+    baseName = 'abse'
+    webInf { from "$buildDir/ng-dist" }
+    dependsOn 'grunt'
+}
+
+task grunt(type: Exec) {
+    if (System.properties['os.name'].toLowerCase().contains("windows")) {
+        commandLine 'cmd', '/c', 'grunt.cmd', "--buildDir=$buildDir"
+    } else {
+        commandLine 'grunt', "--buildDir=$buildDir"
+    }
+}
+
+dependencies {
+
+    def springVersion = '4.0.2.RELEASE'
+    def springLdapVersion = '2.0.1.RELEASE'
+    def springSecurityVersion = '3.2.2.RELEASE'
+    def hibernateVersion = '4.3.0.Final'
+    def hibernateEntityManagerVersion = '4.1.1.Final'
+    def hibernateJpaVersion = '1.0.1.Final'
+    def jtaVersion = '1.1'
+    def c3p0Version = '0.9.1.2'
+    def slf4jVersion = '1.6.6'
+    def cglibVersion = '2.2.2'
+    def commonsCollectionsVersion = '3.2.1'
+    def commonsDigesterVersion = '2.1'
+    def commonsLoggingVersion = '1.1.1'
+    def commonsLangVersion = '3.0.1'
+    def commonsIoVersion = '2.2'
+    def jacksonVersion = '2.3.0'
+    def servletVersion = '3.1.0'
+    def jtdsVersion = '1.3.1'
+    def jodaTimeVersion = '2.2'
+    def junitVersion = '4.11'
+    def mockitoVersion = '1.9.5'
+    def hsqldbVersion = '2.3.2'
+    
+    providedCompile "javax.servlet:javax.servlet-api:$servletVersion"
+    
+    compile "net.sourceforge.jtds:jtds:$jtdsVersion"
+    compile "org.springframework:spring-context:$springVersion"
+    compile "org.springframework:spring-expression:$springVersion"
+    compile "org.springframework:spring-orm:$springVersion"
+    compile "org.springframework:spring-web:$springVersion"
+    compile "org.springframework:spring-webmvc:$springVersion"
+    compile "org.springframework.ldap:spring-ldap-core:$springLdapVersion"
+    compile "org.springframework.security:spring-security-ldap:$springSecurityVersion"
+    compile "org.springframework.security:spring-security-config:$springSecurityVersion"
+    compile "org.springframework.security:spring-security-core:$springSecurityVersion"
+    compile "org.springframework.security:spring-security-web:$springSecurityVersion"
+    compile "org.springframework.security:spring-security-taglibs:$springSecurityVersion"
+    compile "javax.transaction:jta:$jtaVersion"
+    compile "org.hibernate:hibernate-validator:$hibernateVersion"
+    compile "org.hibernate:hibernate-validator-annotation-processor:$hibernateVersion"
+    compile ("org.hibernate:hibernate-entitymanager:$hibernateEntityManagerVersion") {
+        exclude module: "org.jboss.logging:jboss-logging"
+    }
+    compile "org.hibernate:hibernate-c3p0:$hibernateEntityManagerVersion"
+    compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:$hibernateJpaVersion"
+    compile "c3p0:c3p0:$c3p0Version"
+    compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "cglib:cglib-nodep:$cglibVersion"
+    compile "commons-collections:commons-collections:$commonsCollectionsVersion"
+    compile ("commons-digester:commons-digester:$commonsDigesterVersion") {
+        exclude module: "commons-logging:commons-logging"
+    }
+    compile "org.apache.commons:commons-lang3:$commonsLangVersion"
+    compile "commons-io:commons-io:$commonsIoVersion"
+    compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile "joda-time:joda-time:$jodaTimeVersion"
+    compile "org.hsqldb:hsqldb:$hsqldbVersion"
+    
+    testCompile "org.springframework:spring-test:$springVersion"
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-all:$mockitoVersion"
+}

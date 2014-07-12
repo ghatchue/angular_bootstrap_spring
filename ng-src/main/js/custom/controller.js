@@ -24,12 +24,12 @@ app.controller('CustomerController', function ($scope, CustomerService) {
                     if (id == customer.id) {
                         $scope.customers.splice(index, 1);
 
-                        console.info("Customer " + id + " has been deleted.")
+                        console.info("Customer " + id + " has been deleted.");
                     }
                 });
             }
             else {
-                console.error("Customer " + id + " was unable to be deleted.")
+                console.error("Customer " + id + " was unable to be deleted.");
             }
         });
     };
@@ -39,10 +39,10 @@ app.controller('CustomerController', function ($scope, CustomerService) {
             if(id == customer.id) {
                 CustomerService.saveCustomer(customer).then(function(response) {
                     if(response) {
-                        console.info("Customer " + id + " has been saved.")
+                        console.info("Customer " + id + " has been saved.");
                     }
                     else {
-                        console.error("Customer " + id + " was unable to be saved.")
+                        console.error("Customer " + id + " was unable to be saved.");
                     }
                 });
             }

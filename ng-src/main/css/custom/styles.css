@@ -7,30 +7,29 @@ body {
  *        Layouts        *
  ************************/ 
 
-div.menu {
+.menu {
 	padding-bottom:	25px;
 }
 
-div.section {
+.section {
 	border: 		1px solid black;
 	border-radius: 	15px;
 	padding: 		5px;
 }
 
-div.filter-label {
+.filter-label {
 	margin-top:  -15px;
 }
 
-div.panel-content {
-	width: 		150px;
+.panel-content {
 	display:	inline;
 }
 
-div.editable-content {
+.editable-content {
     min-height:	40px;
 }
 
-div.inline {
+.inline {
 	display: 		inline-block;
 	margin-right: 	5px;
 }
@@ -40,5 +39,6 @@ div.inline {
  ************************/ 
  
  .dropdown {
- 	cursor:		pointer !important; 
+ 	cursor:		pointer;
  }
+ 

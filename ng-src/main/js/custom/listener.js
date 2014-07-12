@@ -48,7 +48,7 @@ app.run(function($rootScope, $http, $location, Base64Service, editableOptions) {
      */
     $rootScope.$on('event:loginRequest', function (event, username, password) {
     	// set the basic authentication header that will be parsed in the next request and used to authenticate
-        httpHeaders.common['Authorization'] = 'Basic ' + Base64Service.encode(username + ':' + password);
+        httpHeaders.common.Authorization = 'Basic ' + Base64Service.encode(username + ':' + password);
         
         $http.post('user/authenticate').success(function() {
         	$rootScope.$broadcast('event:loginConfirmed');
@@ -61,7 +61,7 @@ app.run(function($rootScope, $http, $location, Base64Service, editableOptions) {
      * On 'logoutRequest' invoke logout on the server.
      */
     $rootScope.$on('event:logoutRequest', function () {
-        httpHeaders.common['Authorization'] = null;
+        httpHeaders.common.Authorization = null;
         originalLocation = "/main";
     });
 });
