@@ -20,7 +20,12 @@ Login Details as per spring security configuration:
 
 Testing
 ====================
-Simply run on the parent pom     
-   mvn clean install    
+Simply run:
+./gradlew clean build
    
 This will execute Java and Jasmine tests that will test both java classes and angular js files.
+
+To run the example in an embedded Jetty web container, run:
+./gradlew jettyRunWar
+
+The example will be available using a web browser at http://localhost:8080/abse/
